@@ -1,3 +1,6 @@
+// vendor
+window.Flickity = require('flickity');
+
 // modules
 window.PubSub = require('./scripts/pubsub');
 
