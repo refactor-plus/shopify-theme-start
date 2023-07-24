@@ -1,5 +1,5 @@
-require('./scripts/constants.js');
-require('./scripts/pubsub.js');
+// modules
+window.PubSub = require('./scripts/pubsub');
 
 function debounce(fn, wait) {
 	let t;

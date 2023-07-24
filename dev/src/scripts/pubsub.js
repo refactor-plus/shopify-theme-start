@@ -1,23 +1,26 @@
-let subscribers = {};
+module.exports = {
+	EVENTS: {
+		cartUpdated: 'cart-updated'
+	},
+	subscribers: {},
+	subscribe: function (eventName, callback) {
+		if (this.subscribers[eventName] === undefined) {
+			this.subscribers[eventName] = [];
+		}
 
-function subscribe(eventName, callback) {
-	if (subscribers[eventName] === undefined) {
-		subscribers[eventName] = [];
-	}
+		this.subscribers[eventName] = [...this.subscribers[eventName], callback];
 
-	subscribers[eventName] = [...subscribers[eventName], callback];
-
-	return function unsubscribe() {
-		subscribers[eventName] = subscribers[eventName].filter((cb) => {
-			return cb !== callback;
-		});
-	};
-}
-
-function publish(eventName, data) {
-	if (subscribers[eventName]) {
-		subscribers[eventName].forEach((callback) => {
-			callback(data);
-		});
+		return () => {
+			this.subscribers[eventName] = this.subscribers[eventName].filter((cb) => {
+				return cb !== callback;
+			});
+		};
+	},
+	publish: function (eventName, data) {
+		if (this.subscribers[eventName]) {
+			this.subscribers[eventName].forEach((callback) => {
+				callback(data);
+			});
+		}
 	}
 }
