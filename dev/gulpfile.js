@@ -61,12 +61,11 @@ gulp.task('build:scripts', () => {
 		.pipe(buffer())
 		.pipe(gulpif(!argv.prod, sourcemaps.init({loadMaps: true})))
 		.pipe(
-			gulpif(argv.prod,
-				babel({
-					presets: ['@babel/env']
-				})
-			))
-		.pipe(gulpif(argv.prod, uglify()))
+			babel({
+				presets: ['@babel/env']
+			})
+		)
+		.pipe(uglify())
 		.pipe(gulpif(!argv.prod, sourcemaps.write()))
 		.pipe(gulp.dest(path.dist));
 });
