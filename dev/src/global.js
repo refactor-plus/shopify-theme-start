@@ -1,5 +1,6 @@
 // vendor
 window.Flickity = require('flickity');
+require('lazysizes');
 
 // modules
 window.PubSub = require('./scripts/pubsub');
