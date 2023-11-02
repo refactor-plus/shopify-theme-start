@@ -10,6 +10,7 @@ const uglify = require('gulp-uglify');
 const browserify = require('browserify');
 const tap = require('gulp-tap');
 const buffer = require('gulp-buffer');
+const cache = require('gulp-cached');
 
 const path = {
 	fonts: {
@@ -35,11 +36,13 @@ const path = {
 
 gulp.task('build:fonts', () => {
 	return gulp.src(path.fonts.src)
+		.pipe(cache('fonts'))
 		.pipe(gulp.dest(path.dist));
 });
 
 gulp.task('build:styles', () => {
 	return gulp.src(path.styles.src)
+		.pipe(cache('styles'))
 		.pipe(gulpif(!argv.prod, sourcemaps.init()))
 		.pipe(
 			sass({
@@ -54,12 +57,13 @@ gulp.task('build:styles', () => {
 });
 
 gulp.task('build:scripts', () => {
-	return gulp.src(path.scripts.src, {read: false})
+	return gulp.src(path.scripts.src)
+		.pipe(cache('scripts'))
 		.pipe(tap(function (file) {
-			file.contents = browserify(file.path, {debug: true}).bundle();
+			file.contents = browserify(file.path, { debug: true }).bundle();
 		}))
 		.pipe(buffer())
-		.pipe(gulpif(!argv.prod, sourcemaps.init({loadMaps: true})))
+		.pipe(gulpif(!argv.prod, sourcemaps.init({ loadMaps: true })))
 		.pipe(
 			babel({
 				presets: ['@babel/env']
@@ -72,13 +76,14 @@ gulp.task('build:scripts', () => {
 
 gulp.task('build:images', () => {
 	return gulp.src(path.images.src)
+		.pipe(cache('images'))
 		.pipe(gulpif(argv.prod,
 			imagemin([
-				imagemin.gifsicle({interlaced: true}),
-				imagemin.mozjpeg({progressive: true}),
-				imagemin.optipng({optimizationLevel: 3}),
+				imagemin.gifsicle({ interlaced: true }),
+				imagemin.mozjpeg({ progressive: true }),
+				imagemin.optipng({ optimizationLevel: 3 }),
 				imagemin.svgo({
-					plugins: [{removeViewBox: false}, {cleanupIDs: false}]
+					plugins: [{ removeViewBox: false }, { cleanupIDs: false }]
 				})
 			])
 		))

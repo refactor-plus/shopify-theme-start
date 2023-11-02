@@ -4,12 +4,14 @@ Accepts:
 	{string} [class]
 	{string} [alt=image.alt]
 	{string} [style]
+	{float} [aspect_ratio=image.aspect_ratio]
 {% endcomment %}
 
 {% assign img_src = image | img_url: 'master' %}
 {% assign img_alt = alt | default: image.alt %}
 {% assign img_class = class | default: '' %}
 {% assign img_style = style | default: '' %}
+{% assign img_aspect_ratio = aspect_ratio | default: image.aspect_ratio %}
 
 {% capture img_srcset -%}
 	{% liquid
@@ -27,7 +29,7 @@ Accepts:
 <img src="{{ img_placeholder }}"
      data-src="{{ img_src }}"
      data-sizes="auto"
-     data-aspectratio="{{ image.aspect_ratio }}"
+     data-aspectratio="{{ img_aspect_ratio }}"
      data-srcset="{{ img_srcset }}"
      class="lazyload {{ img_class }}"
      style="{{ img_style }}"

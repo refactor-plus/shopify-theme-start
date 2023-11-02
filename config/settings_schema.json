@@ -51,17 +51,57 @@
     "name": "Typography",
     "settings": [
       {
-        "type": "font_picker",
+        "type": "header",
+        "content": "Body font"
+      },
+      {
+        "type": "select",
         "id": "font_body",
-        "default": "assistant_n4",
-        "label": "Body font",
-        "info": "Selecting a different font can affect the speed of your store. [Learn more about system fonts.](https:\/\/help.shopify.com\/manual\/online-store\/os\/store-speed\/improving-speed#fonts)"
+        "label": "Body font source",
+        "options": [
+          {
+            "value": "shopify",
+            "label": "Shopify"
+          },
+          {
+            "value": "example-font",
+            "label": "Example font"
+          }
+        ],
+        "default": "shopify"
       },
       {
         "type": "font_picker",
+        "id": "font_body_shopify",
+        "default": "sans-serif",
+        "label": "Body font Shopify",
+        "info": "Selecting a different font can affect the speed of your store. [Learn more about system fonts.](https:\/\/help.shopify.com\/manual\/online-store\/os\/store-speed\/improving-speed#fonts)"
+      },
+      {
+        "type": "header",
+        "content": "Heading font"
+      },
+      {
+        "type": "select",
         "id": "font_heading",
-        "default": "assistant_n4",
-        "label": "Heading font",
+        "label": "Heading font source",
+        "options": [
+          {
+            "value": "shopify",
+            "label": "Shopify"
+          },
+          {
+            "value": "example-font",
+            "label": "Example font"
+          }
+        ],
+        "default": "shopify"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading_shopify",
+        "default": "sans-serif",
+        "label": "Heading font Shopify",
         "info": "Selecting a different font can affect the speed of your store. [Learn more about system fonts.](https:\/\/help.shopify.com\/manual\/online-store\/os\/store-speed\/improving-speed#fonts)"
       }
     ]
@@ -95,7 +135,13 @@
         "type": "text",
         "id": "social_tiktok_link",
         "label": "TikTok",
-        "info": "https://tiktok.com/@shopify"
+        "info": "https:\/\/tiktok.com\/@shopify"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin_link",
+        "label": "linkedin",
+        "info": "https://linkedin.com/@shopify"
       },
       {
         "type": "text",
@@ -119,13 +165,13 @@
         "type": "text",
         "id": "social_tumblr_link",
         "label": "Tumblr",
-        "info": "https://shopify.tumblr.com"
+        "info": "https:\/\/shopify.tumblr.com"
       },
       {
         "type": "text",
         "id": "social_vimeo_link",
         "label": "Vimeo",
-        "info": "https://vimeo.com/shopify"
+        "info": "https:\/\/vimeo.com\/shopify"
       }
     ]
   }

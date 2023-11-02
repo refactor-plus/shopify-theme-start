@@ -11,9 +11,11 @@
 		<link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
 	{%- endif -%}
 
-	{%- unless settings.font_body.system? and settings.font_heading.system? -%}
-		<link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-	{%- endunless -%}
+	{% if settings.font_body == 'shopify' or settings.font_heading == 'shopify' %}
+		{%- unless settings.font_body_shopify.system? and settings.font_heading_shopify.system? -%}
+			<link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+		{%- endunless -%}
+	{% endif %}
 
 	<title>
 		{{ page_title }}
@@ -30,12 +32,36 @@
 
 	{{ content_for_header }}
 
-	{%- unless settings.font_body.system? -%}
-		<link rel="preload" as="font" href="{{ settings.font_body | font_url }}" type="font/woff2" crossorigin>
-	{%- endunless -%}
-	{%- unless settings.font_heading.system? -%}
-		<link rel="preload" as="font" href="{{ settings.font_heading | font_url }}" type="font/woff2" crossorigin>
-	{%- endunless -%}
+	{% liquid
+		case settings.font_body
+			when 'shopify'
+				unless settings.font_body_shopify.system?
+					assign font_body_url = settings.font_body_shopify | font_url
+					assign font_body_format = 'woff2'
+				endunless
+			when 'example-font'
+				assign font_body_url = 'ExampleFont.otf' | asset_url
+				assign font_body_format = 'opentype'
+		endcase
+
+		case settings.font_heading
+			when 'shopify'
+				unless settings.font_heading_shopify.system?
+					assign font_heading_url = settings.font_heading_shopify | font_url
+					assign font_heading_format = 'woff2'
+				endunless
+			when 'example-font'
+				assign font_heading_url = 'ExampleFont.otf' | asset_url
+				assign font_heading_format = 'opentype'
+		endcase
+	%}
+
+	{% if font_body_url != blank %}
+		<link rel="preload" as="font" href="{{ font_body_url }}" type="font/{{ font_body_format }}" crossorigin>
+	{% endif %}
+	{% if font_heading_url != blank %}
+		<link rel="preload" as="font" href="{{ font_heading_url }}" type="font/{{ font_heading_format }}" crossorigin>
+	{% endif %}
 
 	<script>
 		document.documentElement.className = document.documentElement.className.replace('no-js', 'js');

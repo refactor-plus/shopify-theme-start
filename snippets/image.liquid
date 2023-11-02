@@ -18,7 +18,7 @@ Accepts:
 {% endcomment %}
 
 {% comment %} aspect ratio {% endcomment %}
-{% assign img_ratio_wrap = ratio_wrap | default: true %}
+{% assign img_ratio_wrap = ratio_wrap | default: true, allow_false: true %}
 {% liquid
 	assign default_aspect_ratio = 1 | divided_by: image.aspect_ratio
 	assign img_aspect_ratio = aspect_ratio | default: default_aspect_ratio

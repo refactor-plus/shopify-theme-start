@@ -6,5 +6,7 @@
       "new_window": "Opens in a new window.",
       "external": "Opens external website."
     }
-  }
+  },
+  "components": {},
+  "sections": {}
 }

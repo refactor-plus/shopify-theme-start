@@ -18,6 +18,7 @@
     "gulp-autoprefixer": "^8.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-buffer": "^0.0.2",
+    "gulp-cached": "^1.1.1",
     "gulp-if": "^3.0.0",
     "gulp-imagemin": "^7.1.0",
     "gulp-sass": "^5.1.0",
