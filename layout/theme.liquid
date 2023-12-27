@@ -11,12 +11,6 @@
 		<link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
 	{%- endif -%}
 
-	{% if settings.font_body == 'shopify' or settings.font_heading == 'shopify' %}
-		{%- unless settings.font_body_shopify.system? and settings.font_heading_shopify.system? -%}
-			<link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
-		{%- endunless -%}
-	{% endif %}
-
 	<title>
 		{{ page_title }}
 		{%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
@@ -32,36 +26,21 @@
 
 	{{ content_for_header }}
 
-	{% liquid
-		case settings.font_body
-			when 'shopify'
-				unless settings.font_body_shopify.system?
-					assign font_body_url = settings.font_body_shopify | font_url
-					assign font_body_format = 'woff2'
-				endunless
-			when 'example-font'
-				assign font_body_url = 'ExampleFont.otf' | asset_url
-				assign font_body_format = 'opentype'
-		endcase
+	{% comment %} Fonts {% endcomment %}
 
-		case settings.font_heading
-			when 'shopify'
-				unless settings.font_heading_shopify.system?
-					assign font_heading_url = settings.font_heading_shopify | font_url
-					assign font_heading_format = 'woff2'
-				endunless
-			when 'example-font'
-				assign font_heading_url = 'ExampleFont.otf' | asset_url
-				assign font_heading_format = 'opentype'
-		endcase
-	%}
+	{% if settings.font_body == 'shopify' %}
+		{{ settings.font_body_shopify | font_url | preload_tag: as: 'font', type: 'font/woff2' }}
+	{% endif %}
 
-	{% if font_body_url != blank %}
-		<link rel="preload" as="font" href="{{ font_body_url }}" type="font/{{ font_body_format }}" crossorigin>
+	{% if settings.font_heading == 'shopify' %}
+		{{ settings.font_heading_shopify | font_url | preload_tag: as: 'font', type: 'font/woff2' }}
 	{% endif %}
-	{% if font_heading_url != blank %}
-		<link rel="preload" as="font" href="{{ font_heading_url }}" type="font/{{ font_heading_format }}" crossorigin>
+
+	{% if settings.font_body == 'example-font' or settings.font_heading == 'example-font' %}
+		{{ 'ExampleFont.ttf' | asset_url | preload_tag: as: 'font', type: 'font/truetype' }}
 	{% endif %}
+
+	{% comment %} Global inline scripts {% endcomment %}
 
 	<script>
 		document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
@@ -69,6 +48,8 @@
 			document.documentElement.classList.add('shopify-design-mode');
 		}
 	</script>
+
+	{% comment %} Global assets {% endcomment %}
 
 	{% render 'css-variables' %}
 	{{ 'global.css' | asset_url | stylesheet_tag }}
