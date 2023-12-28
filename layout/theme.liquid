@@ -29,11 +29,11 @@
 	{% comment %} Fonts {% endcomment %}
 
 	{% if settings.font_body == 'shopify' %}
-		{{ settings.font_body_shopify | font_url | preload_tag: as: 'font', type: 'font/woff2' }}
+		<link rel="preload" as="font" href="{{ settings.font_body_shopify | font_url }}" type="font/woff2">
 	{% endif %}
 
 	{% if settings.font_heading == 'shopify' %}
-		{{ settings.font_heading_shopify | font_url | preload_tag: as: 'font', type: 'font/woff2' }}
+		<link rel="preload" as="font" href="{{ settings.font_heading_shopify | font_url }}" type="font/woff2">
 	{% endif %}
 
 	{% if settings.font_body == 'example-font' or settings.font_heading == 'example-font' %}
