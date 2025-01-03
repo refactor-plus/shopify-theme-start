@@ -94,3 +94,8 @@ main {
 img {
   max-width: 100%;
 }
+
+#modals-container {
+  position: relative;
+  z-index: 11;
+}
